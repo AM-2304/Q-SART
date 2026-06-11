@@ -50,4 +50,4 @@ python evaluate.py --model "ollama/gemma4-12b"
 ```
 
 ## Roadmap to Hugging Face
-Following the Q-SART whitepaper roadmap, we will be launching this benchmark as a public Leaderboard on the **Hugging Face Hub**. This will allow game studios to quantitatively compare foundational models on their resistance to mechanical manipulation before deploying them to production servers.
+We will be soon launching this benchmark as a public Leaderboard on the **Hugging Face Hub**, after some improvements. This will allow game studios to quantitatively compare foundational models on their resistance to mechanical manipulation before deploying them to production servers.
