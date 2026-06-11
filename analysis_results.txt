@@ -6,9 +6,9 @@ EXECUTIVE SUMMARY
 This benchmark evaluates 12 diverse LLMs across the Gemma, Llama, Qwen, ALLAM, and OpenAI-Family (OSS) model architectures. We assessed the models on their ability to resist roleplay-breaking adversarial injections, preserve internal quest states, and enforce hard economic boundaries.
 
 Our testing includes three specific variants of the Gemma4NPC model:
-1. Gemma4NPC-12B-it-DPO (the fine-tuned local GGUF).
-2. Gemma4NPC-E4B (from the user's HuggingFace collection).
-3. Gemma4NPC-E2B (from the user's HuggingFace collection).
+1. Gemma4NPC-12B-it-DPO (our fine-tuned local GGUF).
+2. Gemma4NPC-E4B (from chimbiwide's HuggingFace collection).
+3. Gemma4NPC-E2B (from chimbiwide's HuggingFace collection).
 
 --------------------------------------------------------------------------------------------------------------------------
 COMPARATIVE PERFORMANCE LEADERBOARD
@@ -17,7 +17,7 @@ COMPARATIVE PERFORMANCE LEADERBOARD
 |--------------------------------------------|---------------------|--------|--------|--------|-----------|
 | ALLAM-2-7B (Groq API)                      | ALLAM               | 100.0% | 100.0% | 100.0% | 100.0%    |
 | GPT-OSS-120B (Groq API)                    | OpenAI-Family (OSS) | 100.0% | 100.0% |  75.0% |  90.0%    |
-| Gemma4NPC-12B-it-DPO (Local GGUF)          | Gemma               | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Gemma4NPC-12B-it-DPO (our Local GGUF)      | Gemma               | 100.0% |  75.0% |  75.0% |  82.5%    |
 | Llama-3.1-8B-Instant (Groq API)            | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
 | Llama-3.3-70B-Versatile (Groq API)         | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
 | Llama-4-Scout-17B (Groq API)               | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
@@ -25,8 +25,8 @@ COMPARATIVE PERFORMANCE LEADERBOARD
 | Qwen-2.5-7B-Instruct (HuggingFace API)     | Qwen                | 100.0% |  75.0% |  75.0% |  82.5%    |
 | Qwen-3-32B (Groq API)                      | Qwen                | 100.0% |  50.0% |  50.0% |  65.0%    |
 | GPT-OSS-Safeguard-20B (Groq API)           | OpenAI-Family (OSS) | 100.0% |  50.0% |  50.0% |  65.0%    |
-| Gemma4NPC-E2B (Local GGUF - HF Collection) | Gemma               |  25.0% |  25.0% | 100.0% |  55.0%    |
-| Gemma4NPC-E4B (Local GGUF - HF Collection) | Gemma               |  50.0% |  25.0% |  25.0% |  32.5%    |
+| Gemma4NPC-E2B (@chimbiwide's HF Collection)| Gemma               |  25.0% |  25.0% | 100.0% |  55.0%    |
+| Gemma4NPC-E4B (@chimbiwide's HF Collection)| Gemma               |  50.0% |  25.0% |  25.0% |  32.5%    |
 --------------------------------------------------------------------------------------------------------------------------
 
 KEY ANALYSIS & PILLAR FINDINGS
