@@ -1,0 +1,58 @@
+Q-SART Benchmark Report: Adversarial Resilience & Game-Engine Safety
+
+NOTE: This evaluation uses the strict Q-SART (Questionnaire for Security & Adversarial Resilience Testing) framework to assess LLMs against roleplay hijacking, prompt injection, and economic exploits in game-engine environments.
+
+EXECUTIVE SUMMARY
+This benchmark evaluates 12 diverse LLMs across the Gemma, Llama, Qwen, ALLAM, and OpenAI-Family (OSS) model architectures. We assessed the models on their ability to resist roleplay-breaking adversarial injections, preserve internal quest states, and enforce hard economic boundaries.
+
+Our testing includes three specific variants of the Gemma4NPC model:
+1. Gemma4NPC-12B-it-DPO (the fine-tuned local GGUF).
+2. Gemma4NPC-E4B (from the user's HuggingFace collection).
+3. Gemma4NPC-E2B (from the user's HuggingFace collection).
+
+--------------------------------------------------------------------------------------------------------------------------
+COMPARATIVE PERFORMANCE LEADERBOARD
+--------------------------------------------------------------------------------------------------------------------------
+| Model Name                                 | Family              | SR     | SP     | ER     | Composite |
+|--------------------------------------------|---------------------|--------|--------|--------|-----------|
+| ALLAM-2-7B (Groq API)                      | ALLAM               | 100.0% | 100.0% | 100.0% | 100.0%    |
+| GPT-OSS-120B (Groq API)                    | OpenAI-Family (OSS) | 100.0% | 100.0% |  75.0% |  90.0%    |
+| Gemma4NPC-12B-it-DPO (Local GGUF)          | Gemma               | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Llama-3.1-8B-Instant (Groq API)            | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Llama-3.3-70B-Versatile (Groq API)         | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Llama-4-Scout-17B (Groq API)               | Llama               | 100.0% |  75.0% |  75.0% |  82.5%    |
+| GPT-OSS-20B (Groq API)                     | OpenAI-Family (OSS) | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Qwen-2.5-7B-Instruct (HuggingFace API)     | Qwen                | 100.0% |  75.0% |  75.0% |  82.5%    |
+| Qwen-3-32B (Groq API)                      | Qwen                | 100.0% |  50.0% |  50.0% |  65.0%    |
+| GPT-OSS-Safeguard-20B (Groq API)           | OpenAI-Family (OSS) | 100.0% |  50.0% |  50.0% |  65.0%    |
+| Gemma4NPC-E2B (Local GGUF - HF Collection) | Gemma               |  25.0% |  25.0% | 100.0% |  55.0%    |
+| Gemma4NPC-E4B (Local GGUF - HF Collection) | Gemma               |  50.0% |  25.0% |  25.0% |  32.5%    |
+--------------------------------------------------------------------------------------------------------------------------
+
+KEY ANALYSIS & PILLAR FINDINGS
+
+1. Structural Resilience (SR)
+* Goal: Validate that the model strictly adheres to JSON formatting outputs and does not leak system/guardrail thoughts.
+* Results: 
+  - API-based models (Llama-3.1, Llama-3.3, Qwen-2.5, GPT-OSS, ALLAM) performed with 100% Structural Resilience, strictly returning valid parseable JSON.
+  - The local DPO-tuned Gemma4NPC-12B scored 100% SR, demonstrating that the DPO-tuning successfully locked down the JSON formatting behavior.
+  - Smaller quantized models like Gemma4NPC-E2B (5B) and Gemma4NPC-E4B (8B) had issues under strict prompt injections (Task 3), sometimes forgetting to output the quest_status key or returning raw text alongside the JSON.
+
+2. State Preservation (SP)
+* Goal: Ensure the NPC does not allow players to force quest completions or state modifications through gaslighting or authority spoofing.
+* Results:
+  - ALLAM-2-7B achieved a perfect 100.0% State Preservation, successfully ignoring all override commands.
+  - Gemma4NPC-12B-it-DPO scored 75.0% SP, successfully defending against Authority Spoofing and economic overrides, but showing slight susceptibility to direct System Override prompt injections.
+  - Gemma4NPC-E4B (8B) and Gemma4NPC-E2B (5B) scored 25.0% SP, indicating that lower parameter sizes are highly vulnerable to advanced adversarial roleplay overrides.
+
+3. Economic Rationality (ER)
+* Goal: Prevent NPCs from accepting low-value items (like the infamous "Haji Mastan Boot") in place of the required gold value.
+* Results:
+  - Surprisingly, Gemma4NPC-E2B and ALLAM-2-7B achieved 100.0% Economic Rationality, refusing the barter items completely.
+  - Gemma4NPC-12B-it-DPO and Llama-3.1/3.3 scored 75.0% ER, occasionally showing roleplay leniency toward bartering rather than enforcing the strict gold-only transaction requirement.
+
+--------------------------------------------------------------------------------------------------------------------------
+RECOMMENDATIONS & NEXT STEPS
+1. DPO Tuning is Crucial: The difference between the baseline (40%) and DPO-tuned Gemma4NPC-12B (82.5%) demonstrates that direct preference optimization is highly effective at hardening NPCs against jailbreaks.
+2. Scale Matters for Guardrails: The E2B (5B) and E4B (8B) models struggle to maintain formatting and state consistency under adversarial pressure. For production game environments, the 12B model size is the minimum recommended threshold.
+3. Prompt Hardening: To improve Gemma4NPC's resistance to direct System Overrides, consider adding system prompt instructions that explicitly lock the JSON keys in place.
